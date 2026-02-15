@@ -1,0 +1,14 @@
+node_modules/
+.vite/
+out/
+dist/
+*.db
+*.db-journal
+*.db-wal
+.env
+.env.local
+.DS_Store
+thumbs.db
+coverage/
+test-results/
+playwright-report/
