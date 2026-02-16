@@ -1,10 +1,12 @@
-import { app } from 'electron';
 import path from 'path';
 import fs from 'fs';
 
+function getDataRoot(): string {
+  return process.env.DISPEND_DATA_DIR || path.join(process.cwd(), 'data');
+}
+
 export function getDbPath(): string {
-  const userDataPath = app.getPath('userData');
-  const dbDir = path.join(userDataPath, 'data');
+  const dbDir = getDataRoot();
   if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
   }
@@ -12,8 +14,7 @@ export function getDbPath(): string {
 }
 
 export function getBackupDir(): string {
-  const userDataPath = app.getPath('userData');
-  const backupDir = path.join(userDataPath, 'backups');
+  const backupDir = path.join(getDataRoot(), 'backups');
   if (!fs.existsSync(backupDir)) {
     fs.mkdirSync(backupDir, { recursive: true });
   }

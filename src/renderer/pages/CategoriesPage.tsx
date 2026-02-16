@@ -21,6 +21,7 @@ import {
 import { Plus, Pencil, Trash2, ChevronRight, FolderTree } from 'lucide-react';
 import { cn } from '@renderer/lib/utils';
 import type { Category, CreateCategoryInput, UpdateCategoryInput, CategoryType } from '@shared/types';
+import { api } from '@renderer/lib/api';
 
 interface CategoryNode extends Category {
   children: CategoryNode[];
@@ -124,7 +125,7 @@ export function CategoriesPage() {
   const [icon, setIcon] = useState('');
 
   const loadCategories = useCallback(async () => {
-    const data = await window.api.categories.list();
+    const data = await api.categories.list();
     setCategories(data);
   }, []);
 
@@ -177,7 +178,7 @@ export function CategoriesPage() {
         icon: icon.trim() || null,
         parentId: parentId === 'none' ? null : parentId,
       };
-      await window.api.categories.update(input);
+      await api.categories.update(input);
     } else {
       const input: CreateCategoryInput = {
         name: name.trim(),
@@ -186,7 +187,7 @@ export function CategoriesPage() {
         icon: icon.trim() || undefined,
         parentId: parentId === 'none' ? undefined : parentId,
       };
-      await window.api.categories.create(input);
+      await api.categories.create(input);
     }
 
     setDialogOpen(false);
@@ -196,7 +197,7 @@ export function CategoriesPage() {
 
   const handleDelete = async () => {
     if (!deletingCategory) return;
-    await window.api.categories.delete(deletingCategory.id);
+    await api.categories.delete(deletingCategory.id);
     setDeleteDialogOpen(false);
     setDeletingCategory(null);
     loadCategories();

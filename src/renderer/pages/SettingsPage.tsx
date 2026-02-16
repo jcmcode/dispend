@@ -1,6 +1,7 @@
 import { Header } from '@renderer/components/layout/Header';
 import { useThemeStore } from '@renderer/stores/theme';
 import { Button } from '@renderer/components/ui/button';
+import { api } from '@renderer/lib/api';
 
 export function SettingsPage() {
   const { theme, setTheme } = useThemeStore();
@@ -33,7 +34,7 @@ export function SettingsPage() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => window.api.app.backup()}
+            onClick={() => api.app.backup()}
           >
             Create Backup
           </Button>

@@ -32,6 +32,7 @@ import type {
   Category,
   Currency,
 } from '@shared/types';
+import { api } from '@renderer/lib/api';
 
 const PAGE_SIZE = 50;
 
@@ -76,15 +77,15 @@ export function TransactionsPage() {
     if (startDate) filters.startDate = startDate;
     if (endDate) filters.endDate = endDate;
 
-    const result = await window.api.transactions.list(filters);
+    const result = await api.transactions.list(filters);
     setTransactions(result.data);
     setTotal(result.total);
   }, [search, filterAccount, filterCategory, filterType, startDate, endDate, page]);
 
   const loadRefData = useCallback(async () => {
     const [accts, cats] = await Promise.all([
-      window.api.accounts.list(),
-      window.api.categories.list(),
+      api.accounts.list(),
+      api.categories.list(),
     ]);
     setAccounts(accts);
     setCategories(cats);
@@ -147,7 +148,7 @@ export function TransactionsPage() {
         status: formStatus,
         notes: formNotes.trim() || null,
       };
-      await window.api.transactions.update(input);
+      await api.transactions.update(input);
     } else {
       const input: CreateTransactionInput = {
         accountId: formAccountId,
@@ -160,7 +161,7 @@ export function TransactionsPage() {
         currency: (account?.currency || 'CAD') as Currency,
         notes: formNotes.trim() || undefined,
       };
-      await window.api.transactions.create(input);
+      await api.transactions.create(input);
     }
 
     setDialogOpen(false);
@@ -170,7 +171,7 @@ export function TransactionsPage() {
 
   const handleDelete = async () => {
     if (!deletingTransaction) return;
-    await window.api.transactions.delete(deletingTransaction.id);
+    await api.transactions.delete(deletingTransaction.id);
     setDeleteDialogOpen(false);
     setDeletingTransaction(null);
     loadTransactions();

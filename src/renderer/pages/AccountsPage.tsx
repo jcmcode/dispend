@@ -22,6 +22,7 @@ import { Plus, Pencil, Trash2, Landmark, CreditCard, PiggyBank, TrendingUp, Bank
 import { formatCurrency } from '@renderer/lib/formatters';
 import { ACCOUNT_TYPES, CURRENCIES } from '@renderer/lib/constants';
 import type { Account, CreateAccountInput, UpdateAccountInput, AccountType, Currency } from '@shared/types';
+import { api } from '@renderer/lib/api';
 
 const ACCOUNT_ICONS: Record<AccountType, React.ComponentType<{ className?: string }>> = {
   checking: Landmark,
@@ -50,7 +51,7 @@ export function AccountsPage() {
   const [color, setColor] = useState('#6366f1');
 
   const loadAccounts = useCallback(async () => {
-    const data = await window.api.accounts.list();
+    const data = await api.accounts.list();
     setAccounts(data);
   }, []);
 
@@ -100,7 +101,7 @@ export function AccountsPage() {
         notes: notes.trim() || null,
         color,
       };
-      await window.api.accounts.update(input);
+      await api.accounts.update(input);
     } else {
       const input: CreateAccountInput = {
         name: name.trim(),
@@ -111,7 +112,7 @@ export function AccountsPage() {
         notes: notes.trim() || undefined,
         color,
       };
-      await window.api.accounts.create(input);
+      await api.accounts.create(input);
     }
 
     setDialogOpen(false);
@@ -121,7 +122,7 @@ export function AccountsPage() {
 
   const handleDelete = async () => {
     if (!deletingAccount) return;
-    await window.api.accounts.delete(deletingAccount.id);
+    await api.accounts.delete(deletingAccount.id);
     setDeleteDialogOpen(false);
     setDeletingAccount(null);
     loadAccounts();

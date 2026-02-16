@@ -8,7 +8,7 @@ interface ThemeStore {
 }
 
 export const useThemeStore = create<ThemeStore>((set) => ({
-  theme: 'dark',
+  theme: (localStorage.getItem('dispend-theme') as Theme) || 'dark',
   setTheme: (theme) => {
     set({ theme });
     const root = document.documentElement;
@@ -17,6 +17,6 @@ export const useThemeStore = create<ThemeStore>((set) => ({
     } else {
       root.classList.remove('dark');
     }
-    window.api.app.setTheme(theme);
+    localStorage.setItem('dispend-theme', theme);
   },
 }));

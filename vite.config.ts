@@ -1,26 +1,24 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
-  css: {
-    postcss: {
-      plugins: [
-        // Tailwind v4 works as a PostCSS plugin
-        require('@tailwindcss/postcss')(),
-      ],
-    },
-  },
+  plugins: [react(), tailwindcss()],
+  root: 'src/renderer',
   resolve: {
     alias: {
       '@shared': path.resolve(__dirname, 'src/shared'),
       '@renderer': path.resolve(__dirname, 'src/renderer'),
     },
   },
-  build: {
-    rollupOptions: {
-      input: 'src/renderer/index.html',
+  server: {
+    proxy: {
+      '/api': 'http://localhost:3001',
     },
+  },
+  build: {
+    outDir: path.resolve(__dirname, 'dist/client'),
+    emptyOutDir: true,
   },
 });

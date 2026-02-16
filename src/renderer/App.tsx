@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MainLayout } from './components/layout/MainLayout';
 import { DashboardPage } from './pages/DashboardPage';
 import { TransactionsPage } from './pages/TransactionsPage';
@@ -13,7 +13,7 @@ import { CategoriesPage } from './pages/CategoriesPage';
 
 export function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<DashboardPage />} />
@@ -28,6 +28,6 @@ export function App() {
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }

@@ -32,8 +32,8 @@ const bottomItems = [
 export function Sidebar() {
   return (
     <aside className="flex h-full w-60 flex-col border-r bg-sidebar text-sidebar-foreground">
-      <div className="flex h-14 items-center px-6 font-bold text-lg tracking-tight" style={{ WebkitAppRegion: 'drag' } as React.CSSProperties}>
-        <span className="ml-8">Dispend</span>
+      <div className="flex h-14 items-center px-6 font-bold text-lg tracking-tight">
+        <span>Dispend</span>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-2">
         {navItems.map((item) => (
